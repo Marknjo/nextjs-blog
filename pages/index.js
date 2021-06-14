@@ -1,23 +1,9 @@
-import Link from 'next/link';
+import styles from '../styles/Home.module.css';
 
-const HomePage = function () {
+export default function Home() {
   return (
-    <>
-      <h1>Home Page</h1>
-
-      <nav>
-        <ul>
-          <li>
-            <Link href="/portfolio">Portfolio</Link>
-          </li>
-          <li>
-            <Link href="/clients">Clients</Link>
-          </li>
-          <li></li>
-        </ul>
-      </nav>
-    </>
+    <div className={styles.container}>
+      <h1>Hello Next app</h1>
+    </div>
   );
-};
-
-export default HomePage;
+}
