@@ -4,8 +4,6 @@ import { getFeaturedEvents } from '../data/dummy-data';
 const HomePage = function () {
   const featuredEvents = getFeaturedEvents();
 
-  console.log(featuredEvents);
-
   return (
     <div>
       <EventList items={featuredEvents} />
