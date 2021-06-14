@@ -1,9 +1,9 @@
-import styles from '../styles/Home.module.css';
-
-export default function Home() {
+const HomePage = function () {
   return (
-    <div className={styles.container}>
-      <h1>Hello Next app</h1>
+    <div>
+      <h1>Home Page</h1>
     </div>
   );
-}
+};
+
+export default HomePage;
