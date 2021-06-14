@@ -1,8 +1,21 @@
+import Link from 'next/link';
+
 const HomePage = function () {
   return (
     <>
       <h1>Home Page</h1>
-      <p>This is the homepage</p>
+
+      <nav>
+        <ul>
+          <li>
+            <Link href="/portfolio">Portfolio</Link>
+          </li>
+          <li>
+            <Link href="/clients">Clients</Link>
+          </li>
+          <li></li>
+        </ul>
+      </nav>
     </>
   );
 };
