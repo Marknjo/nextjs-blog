@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 function LastSalesPage(props) {
   const [sales, setSales] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  //const [error, setError] = useState(false);
+
+  const { error, data } = useSWR(
+    'https://react-http-be337-default-rtdb.firebaseio.com/sales.json'
+  );
 
   const transFormData = useCallback(data => {
     const transformedSales = [];
@@ -15,6 +20,8 @@ function LastSalesPage(props) {
         volume: data[key].volume,
       });
     }
+
+    return transformedSales;
   }, []);
 
   useEffect(() => {
@@ -39,12 +46,13 @@ function LastSalesPage(props) {
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
-        setError(error.message);
+        //setError(error.message);
       }
     }
-
     //getData();
-  }, []);
+
+    setSales(transFormData(data));
+  }, [data]);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -54,8 +62,8 @@ function LastSalesPage(props) {
     return <p>{error}</p>;
   }
 
-  if (!sales) {
-    return <p>No sales yet!</p>;
+  if (!sales || !data) {
+    return <p>Loading...</p>;
   }
 
   if (sales.length === 0) {
