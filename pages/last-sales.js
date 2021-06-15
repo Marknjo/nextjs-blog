@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useSWR from 'swr';
 
 function LastSalesPage(props) {
-  const [sales, setSales] = useState(undefined);
+  const [sales, setSales] = useState(props.sales);
   const [isLoading, setIsLoading] = useState(false);
   //const [error, setError] = useState(false);
 
@@ -62,7 +62,7 @@ function LastSalesPage(props) {
     return <p>{error}</p>;
   }
 
-  if (!sales || !data) {
+  if (!sales && !data) {
     return <p>Loading...</p>;
   }
 
@@ -80,6 +80,34 @@ function LastSalesPage(props) {
         ))}
     </ul>
   );
+}
+
+export async function getStaticProps() {
+  const response = await fetch(
+    'https://react-http-be337-default-rtdb.firebaseio.com/sales.json'
+  );
+
+  if (!response.ok) {
+    throw new Error('Could not fetch data');
+  }
+
+  const data = await response.json();
+
+  const transformedSales = [];
+
+  for (const key in data) {
+    transformedSales.push({
+      id: key,
+      username: data[key].username,
+      volume: data[key].volume,
+    });
+  }
+
+  return {
+    props: {
+      sales: transformedSales,
+    },
+  };
 }
 
 export default LastSalesPage;
