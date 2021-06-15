@@ -103,6 +103,12 @@ export async function getStaticProps() {
     });
   }
 
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       sales: transformedSales,
