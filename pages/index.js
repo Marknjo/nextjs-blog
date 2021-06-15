@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import styles from '../styles/Home.module.css';
+import Link from 'next/link';
 
 function Home(props) {
   const { products } = props;
@@ -9,7 +10,9 @@ function Home(props) {
     <div className={styles.container}>
       <ul>
         {products.map(product => (
-          <li key={product.id}>{product.title}</li>
+          <li key={product.id}>
+            <Link href={`/${product.id}`}>{product.title}</Link>
+          </li>
         ))}
       </ul>
     </div>
@@ -23,6 +26,20 @@ export async function getStaticProps() {
   const jsonData = await fs.readFile(filePath);
 
   const data = JSON.parse(jsonData);
+
+  if (!data) {
+    return {
+      redirect: {
+        destination: '/',
+      },
+    };
+  }
+
+  if (data.products.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
