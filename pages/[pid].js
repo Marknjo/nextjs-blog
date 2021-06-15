@@ -30,6 +30,12 @@ export async function getStaticProps(context) {
 
   const product = data.products.find(product => product.id === productId);
 
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       loadedProduct: product,
@@ -44,7 +50,7 @@ export async function getStaticPaths() {
 
   return {
     paths: paramsWithParams,
-    fallback: false,
+    fallback: true,
     //fallback: 'blocking',
   };
 }
