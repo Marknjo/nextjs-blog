@@ -1,9 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function LastSalesPage(props) {
   const [sales, setSales] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const transFormData = useCallback(data => {
+    const transformedSales = [];
+
+    for (const key in data) {
+      transformedSales.push({
+        id: key,
+        username: data[key].username,
+        volume: data[key].volume,
+      });
+    }
+  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -20,15 +32,7 @@ function LastSalesPage(props) {
 
         const data = await response.json();
 
-        const transformedSales = [];
-
-        for (const key in data) {
-          transformedSales.push({
-            id: key,
-            username: data[key].username,
-            volume: data[key].volume,
-          });
-        }
+        const transformedSales = transFormData(data);
 
         setSales(transformedSales);
 
@@ -39,7 +43,7 @@ function LastSalesPage(props) {
       }
     }
 
-    getData();
+    //getData();
   }, []);
 
   if (isLoading) {
