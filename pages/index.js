@@ -1,33 +1,9 @@
-import Head from 'next/head';
-import EventList from '../components/events/event-list';
-import { getFeaturedEvents } from '../helpers/api-utils';
+import styles from '../styles/Home.module.css';
 
-const HomePage = function (props) {
-  const featuredEvents = props.events;
-
+export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>NextJS Events</title>
-        <meta
-          name="description"
-          content="Find latest events in your area easealy"
-        />
-      </Head>
-      <EventList items={featuredEvents} />
+    <div className={styles.container}>
+      <h1>Hello Next app</h1>
     </div>
   );
-};
-
-export async function getStaticProps() {
-  const featuredEvents = await getFeaturedEvents();
-
-  return {
-    props: {
-      events: featuredEvents,
-    },
-    revalidate: 1800,
-  };
 }
-
-export default HomePage;
