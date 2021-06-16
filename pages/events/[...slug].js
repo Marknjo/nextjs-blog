@@ -10,6 +10,7 @@ import Button from '../../components/ui/button';
 import ErrorAlert from '../../components/error-alert/error-alert';
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 const FilteredEventsPage = function (props) {
   //combining with client side data fetching
@@ -47,6 +48,13 @@ const FilteredEventsPage = function (props) {
   ) {
     return (
       <>
+        <Head>
+          <title>NextJS Events | Filtered Events </title>
+          <meta
+            name="description"
+            content={`All Events for: ${numMonth}/${numYear}`}
+          />
+        </Head>
         <ErrorAlert>
           <p className="center">Invalid filter: Please adjust your values!</p>
         </ErrorAlert>
