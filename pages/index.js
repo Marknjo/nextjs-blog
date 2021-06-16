@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const emailInput = useRef();
   const feedbackInput = useRef();
+  const [feedbacksResp, setFeedbacksResp] = useState([]);
 
   async function submitFormHandler(event) {
     event.preventDefault();
@@ -45,9 +46,29 @@ export default function Home() {
     }
   }
 
+  async function loadFeedbackHandler() {
+    try {
+      //load data from the file
+      const resp = await fetch('/api/feedback');
+
+      if (!resp.ok) {
+        throw new Error('Could not fetch data');
+      }
+
+      const { feedbacks } = await resp.json();
+      console.log(feedbacks);
+
+      setFeedbacksResp(feedbacks);
+    } catch (error) {
+      //handle erros
+      console.log(`💥💥💥 ${error}`);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <h1>Home Page</h1>
+
       <form onSubmit={submitFormHandler}>
         <div>
           <label htmlFor="email">Your Email Address</label>
@@ -70,6 +91,18 @@ export default function Home() {
           Send Feedback
         </button>
       </form>
+
+      <hr size="5" />
+
+      <button type="button" onClick={loadFeedbackHandler}>
+        Load Feedback
+      </button>
+
+      <ul>
+        {feedbacksResp.map(feedback => (
+          <li key={feedback.id}>{feedback.text}</li>
+        ))}
+      </ul>
     </div>
   );
 }

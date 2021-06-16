@@ -1,6 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 
+function buildFeedbackPath() {
+  return path.join(process.cwd(), 'data', 'feedback.json');
+}
+
+function getFileData(filePath) {
+  const fileData = fs.readFileSync(filePath);
+  return JSON.parse(fileData);
+}
+
 function handler(req, res) {
   if (req.method === 'POST') {
     //extract data from the incoming request
@@ -16,9 +25,8 @@ function handler(req, res) {
     };
 
     //send it to the database
-    const filePath = path.join(process.cwd(), 'data', 'feedback.json');
-    const fileData = fs.readFileSync(filePath);
-    const data = JSON.parse(fileData);
+    const filePath = buildFeedbackPath();
+    const data = getFileData(filePath);
 
     data.push(newFeedback);
 
@@ -26,7 +34,10 @@ function handler(req, res) {
 
     res.status(201).json({ message: 'Success', ok: true, feedback: data });
   } else {
-    res.status(200).json({ message: 'This works' });
+    const filePath = buildFeedbackPath();
+    const data = getFileData(filePath);
+
+    res.status(200).json({ message: 'Success', ok: true, feedbacks: data });
   }
 }
 
