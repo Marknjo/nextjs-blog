@@ -25,16 +25,26 @@ export async function getAllEvents() {
   } catch (error) {
     //handle erros
     console.error(`💥💥💥💥 ${error}`);
+
+    throw error;
   }
 }
 
 export async function getFeaturedEvents() {
-  const events = await getAllEvents();
+  try {
+    const events = await getAllEvents();
 
-  return events.filter(event => event.isFeatured);
+    return events.filter(event => event.isFeatured);
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function getEventById(id) {
-  const events = await getAllEvents();
-  return events.find(event => event.id === id);
+  try {
+    const events = await getAllEvents();
+    return events.find(event => event.id === id);
+  } catch (error) {
+    throw error;
+  }
 }
