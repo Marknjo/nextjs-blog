@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 
-function buildFeedbackPath() {
+export function buildFeedbackPath() {
   return path.join(process.cwd(), 'data', 'feedback.json');
 }
 
-function getFileData(filePath) {
+export function extractFeedbacks(filePath) {
   const fileData = fs.readFileSync(filePath);
   return JSON.parse(fileData);
 }
@@ -26,7 +26,7 @@ function handler(req, res) {
 
     //send it to the database
     const filePath = buildFeedbackPath();
-    const data = getFileData(filePath);
+    const data = extractFeedbacks(filePath);
 
     data.push(newFeedback);
 
@@ -35,7 +35,7 @@ function handler(req, res) {
     res.status(201).json({ message: 'Success', ok: true, feedback: data });
   } else {
     const filePath = buildFeedbackPath();
-    const data = getFileData(filePath);
+    const data = extractFeedbacks(filePath);
 
     res.status(200).json({ message: 'Success', ok: true, feedbacks: data });
   }
