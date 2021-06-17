@@ -41,3 +41,18 @@
 .control input {
   flex: 1;
 }
+
+.error-message-box {
+  margin: 1rem 0;
+  padding: 0.8rem 1.5rem;
+
+  font-size: 0.9rem;
+  color: #3f0c03;
+  background-color: #f0e1de;
+
+  border-radius: 0.4rem;
+}
+
+.error input {
+  border-color: tomato;
+}
