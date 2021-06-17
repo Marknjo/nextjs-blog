@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+import { getFilePath } from '../../../helpers/server-utils';
 
 function handler(req, resp) {
   if (req.method === 'POST') {
@@ -33,7 +34,7 @@ function handler(req, resp) {
     //transform response data
 
     //save the data to database
-    const filePath = path.join(process.cwd(), 'data', 'comments.json');
+    const filePath = getFilePath('comments');
     const fileData = fs.readFileSync(filePath);
 
     //push new data
