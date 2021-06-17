@@ -7,6 +7,12 @@ function NewsletterRegistration() {
   const [successMessage, setSuccessMessage] = useState('');
   const emailInput = useRef();
 
+  function closeMessageBoxHandler() {
+    setErrorMessage('');
+    setSuccessMessage('');
+    setHasError(false);
+  }
+
   async function registrationHandler(event) {
     try {
       event.preventDefault();
@@ -58,11 +64,22 @@ function NewsletterRegistration() {
     <section className={classes.newsletter}>
       <h2>Sign up to stay updated!</h2>
       {errorMessage && (
-        <p className={classes['error-message-box']}>⛔ {errorMessage}</p>
+        <p className={classes['error-message-box']}>
+          ⛔ {errorMessage}{' '}
+          <span onClick={closeMessageBoxHandler} className={classes['close']}>
+            &times;
+          </span>
+        </p>
       )}
 
       {successMessage && (
-        <p className={classes['success-message-box']}>⛔ {successMessage}</p>
+        <p className={classes['success-message-box']}>
+          ⛔ {successMessage}{' '}
+          <span
+            onClick={closeMessageBoxHandler}
+            className={classes['close']}
+          ></span>
+        </p>
       )}
       <form onSubmit={registrationHandler}>
         <div className={`${classes.control} ${hasError ? classes.error : ''}`}>

@@ -49,6 +49,8 @@
 
   font-size: 0.9rem;
   border-radius: 0.4rem;
+
+  position: relative;
 }
 
 .error-message-box {
@@ -63,4 +65,13 @@
 
 .error input {
   border-color: tomato;
+}
+
+.close {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.6rem;
+  font-size: 1.2rem;
+  color: #202020;
+  cursor: pointer;
 }
