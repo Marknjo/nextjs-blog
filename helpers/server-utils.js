@@ -26,3 +26,21 @@ export function extractDataFromJsonFile(filePath) {
   //get raw data from json file
   return JSON.parse(fileData);
 }
+
+/**
+ *
+ * Save to the Json file
+ *
+ * @param {Object} data | Data to save to json file
+ * @param {String} filePath | Location of the json file
+ * @param {Object} reqData | New data to merge with the saved data
+ *
+ * @return null
+ */
+export function saveDataToJsonFile(data, filePath, reqData) {
+  data = [reqData, ...data];
+  //write data to the file on the disk
+  fs.writeFileSync(filePath, JSON.stringify(data));
+
+  return null;
+}

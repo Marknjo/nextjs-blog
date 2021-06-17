@@ -2,6 +2,7 @@ import fs from 'fs';
 import {
   extractDataFromJsonFile,
   getFilePath,
+  saveDataToJsonFile,
 } from '../../../helpers/server-utils';
 
 function handler(req, resp) {
@@ -26,7 +27,7 @@ function handler(req, resp) {
       return;
     }
 
-    const transformedReq = {
+    const reqData = {
       id: Math.random().toString().slice(2, 15),
       email: reqEmail,
       name: reqName,
@@ -41,16 +42,13 @@ function handler(req, resp) {
     //push new data
     const data = extractDataFromJsonFile(filePath);
 
-    data.push(transformedReq);
-
-    //write data to the file on the disk
-    fs.writeFileSync(filePath, JSON.stringify(data));
+    saveDataToJsonFile(data, filePath, reqData);
 
     //respond with the request -> for pre-rendering
 
     resp.status(200).json({
       ok: true,
-      response: transformedReq,
+      response: reqData,
     });
   }
 }
