@@ -35,6 +35,9 @@ function NewComment(props) {
     });
 
     setIsInvalid(false);
+    emailInputRef.current.value = '';
+    nameInputRef.current.value = '';
+    commentInputRef.current.value = '';
   }
 
   return (
