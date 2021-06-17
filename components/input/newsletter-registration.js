@@ -74,11 +74,10 @@ function NewsletterRegistration() {
 
       {successMessage && (
         <p className={classes['success-message-box']}>
-          ⛔ {successMessage}{' '}
-          <span
-            onClick={closeMessageBoxHandler}
-            className={classes['close']}
-          ></span>
+          {successMessage}{' '}
+          <span onClick={closeMessageBoxHandler} className={classes['close']}>
+            &times;
+          </span>
         </p>
       )}
       <form onSubmit={registrationHandler}>
