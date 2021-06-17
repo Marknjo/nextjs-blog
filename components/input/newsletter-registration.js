@@ -31,7 +31,7 @@ function NewsletterRegistration() {
       const emailAddress = {
         email: enteredEmail,
       };
-      const resp = await fetch('/api/signup', {
+      const resp = await fetch('/api/newsletter', {
         method: 'POST',
         body: JSON.stringify(emailAddress),
         headers: {
