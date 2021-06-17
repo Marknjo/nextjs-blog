@@ -4,6 +4,7 @@ import classes from './newsletter-registration.module.css';
 function NewsletterRegistration() {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const emailInput = useRef();
 
   async function registrationHandler(event) {
@@ -21,6 +22,27 @@ function NewsletterRegistration() {
         throw new Error('Please enter a valid email');
       }
       // send valid data to API
+      const emailAddress = {
+        email: enteredEmail,
+      };
+      const resp = await fetch('/api/signup', {
+        method: 'POST',
+        body: JSON.stringify(emailAddress),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!resp.ok) {
+        throw new Error('Could Not submit the email. Try again');
+      }
+
+      const data = await resp.json();
+
+      console.log(data);
+
+      //success Message
+      setSuccessMessage('Your email was successfully submitted 😍');
 
       //form has no error & reset the input
       emailInput.current.value = '';
@@ -37,6 +59,10 @@ function NewsletterRegistration() {
       <h2>Sign up to stay updated!</h2>
       {errorMessage && (
         <p className={classes['error-message-box']}>⛔ {errorMessage}</p>
+      )}
+
+      {successMessage && (
+        <p className={classes['success-message-box']}>⛔ {successMessage}</p>
       )}
       <form onSubmit={registrationHandler}>
         <div className={`${classes.control} ${hasError ? classes.error : ''}`}>

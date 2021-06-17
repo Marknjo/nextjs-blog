@@ -42,15 +42,23 @@
   flex: 1;
 }
 
+.success-message-box,
 .error-message-box {
   margin: 1rem 0;
   padding: 0.8rem 1.5rem;
 
   font-size: 0.9rem;
+  border-radius: 0.4rem;
+}
+
+.error-message-box {
   color: #3f0c03;
   background-color: #f0e1de;
+}
 
-  border-radius: 0.4rem;
+.success-message-box {
+  color: #072c02;
+  background-color: #c0e7bb;
 }
 
 .error input {
