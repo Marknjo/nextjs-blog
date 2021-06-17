@@ -81,3 +81,15 @@ export function filteredComments(allComments) {
     text: comment.text,
   }));
 }
+
+/**
+ * Gets events mapped for client side consumption
+ * @param {String} eventId Event id which to fetch it's comments
+ * @returns {Object} Array of mapped comments
+ *
+ * @author Mark Njoroge
+ */
+export function clientSideEventComments(eventId) {
+  const allComments = fetchAllEventComments(eventId);
+  return filteredComments(allComments);
+}
