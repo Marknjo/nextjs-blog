@@ -1,16 +1,19 @@
 import {
+  clientSideEventComments,
   extractDataFromJsonFile,
   getFilePath,
   saveDataToJsonFile,
 } from '../../../helpers/server-utils';
 
 function handler(req, resp) {
+  //we are pre-rendering the reposnse
+  const eventId = req.query.eventId;
+
   if (req.method === 'POST') {
-    //hande the post request
+    //handle the post request
     const reqEmail = req.body.email;
     const reqName = req.body.name;
     const reqText = req.body.text;
-    const reqEventId = req.body.eventId;
 
     //do some server side validations
     if (
@@ -22,7 +25,7 @@ function handler(req, resp) {
       !reqText ||
       reqText.trim() === ''
     ) {
-      resp.status(400).json({ ok: false });
+      resp.status(422).json({ message: 'One of the input has errors' });
       return;
     }
 
@@ -31,7 +34,7 @@ function handler(req, resp) {
       email: reqEmail,
       name: reqName,
       text: reqText,
-      eventId: reqEventId,
+      eventId,
     };
     //transform response data
 
@@ -45,9 +48,22 @@ function handler(req, resp) {
 
     //respond with the request -> for pre-rendering
 
+    resp.status(201).json({
+      messsage: 'Added comment successfully',
+      response: reqData,
+    });
+  }
+
+  if (req.method === 'GET') {
+    //sanitize the data before fetching
+
+    const eventComments = clientSideEventComments(eventId);
+
     resp.status(200).json({
       ok: true,
-      response: reqData,
+      response: {
+        comments: eventComments,
+      },
     });
   }
 }

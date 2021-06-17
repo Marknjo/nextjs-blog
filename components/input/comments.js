@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import CommentList from './comment-list';
 import NewComment from './new-comment';
 import classes from './comments.module.css';
+//import { clientSideEventComments } from '../../helpers/server-utils';
 
 function Comments(props) {
   const { eventId } = props;
@@ -35,17 +36,11 @@ function Comments(props) {
 
   async function addCommentHandler(commentData) {
     // send data to API
-    //sanitized comments
-    //transform data
-    const transformData = {
-      ...commentData,
-      eventId,
-    };
 
     // send the data
-    const response = await fetch('/api/comments/', {
+    const response = await fetch(`/api/comments/${eventId}`, {
       method: 'POST',
-      body: JSON.stringify(transformData),
+      body: JSON.stringify(commentData),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -69,6 +64,20 @@ function Comments(props) {
       {showComments && <CommentList comments={eventComments} />}
     </section>
   );
+}
+
+export async function getStaticProps(context) {
+  const { params } = context;
+
+  const eventId = params.eventId;
+
+  //const eventsComments = clientSideEventComments(eventId);
+
+  if (eventId) {
+    //console.log(eventId);
+  } else {
+    //console.log('No valaue found');
+  }
 }
 
 export default Comments;
