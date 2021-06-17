@@ -23,7 +23,7 @@ function Comments(props) {
     };
 
     // send the data
-    const response = await fetch('/api/comment/', {
+    const response = await fetch('/api/comments/', {
       method: 'POST',
       body: JSON.stringify(transformData),
       headers: {
