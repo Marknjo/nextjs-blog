@@ -1,6 +1,8 @@
-import path from 'path';
 import fs from 'fs';
-import { getFilePath } from '../../../helpers/server-utils';
+import {
+  extractDataFromJsonFile,
+  getFilePath,
+} from '../../../helpers/server-utils';
 
 function handler(req, resp) {
   if (req.method === 'POST') {
@@ -35,10 +37,9 @@ function handler(req, resp) {
 
     //save the data to database
     const filePath = getFilePath('comments');
-    const fileData = fs.readFileSync(filePath);
 
     //push new data
-    const data = JSON.parse(fileData);
+    const data = extractDataFromJsonFile(filePath);
 
     data.push(transformedReq);
 
