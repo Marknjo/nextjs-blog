@@ -19,6 +19,8 @@ export function getFilePath(fileName, folderPath = ['data']) {
  *
  * @param {String} filePath | Path to the JSON file
  * @returns Object | Arrays of stored objects
+ *
+ * @author Mark Njoroge
  */
 export function extractDataFromJsonFile(filePath) {
   const fileData = fs.readFileSync(filePath);
@@ -36,6 +38,8 @@ export function extractDataFromJsonFile(filePath) {
  * @param {Object} reqData | New data to merge with the saved data
  *
  * @return null
+ *
+ * @author Mark Njoroge
  */
 export function saveDataToJsonFile(data, filePath, reqData) {
   data = [reqData, ...data];
@@ -43,4 +47,26 @@ export function saveDataToJsonFile(data, filePath, reqData) {
   fs.writeFileSync(filePath, JSON.stringify(data));
 
   return null;
+}
+
+/**
+ *
+ * Fetches all comments for an event
+ *
+ * @param {String} eventId The current event id
+ * @returns {Object} Arrays of current event's comment
+ *
+ * @author Mark Njoroge
+ */
+export function fetchAllEventComments(eventId) {
+  const filePath = getFilePath('comments');
+  const data = extractDataFromJsonFile(filePath);
+
+  return data
+    .filter(comment => comment.eventId === eventId)
+    .map(comment => ({
+      id: comment.id,
+      name: comment.name,
+      text: comment.text,
+    }));
 }
