@@ -7,6 +7,7 @@ import EventLogistics from '../../components/event-detail/event-logistics';
 import EventContent from '../../components/event-detail/event-content';
 import ErrorAlert from '../../components/ui/error-alert';
 import Comments from '../../components/input/comments';
+import { clientSideEventComments } from '../../helpers/server-utils';
 
 function EventDetailPage(props) {
   const event = props.selectedEvent;
@@ -23,10 +24,7 @@ function EventDetailPage(props) {
     <Fragment>
       <Head>
         <title>{event.title}</title>
-        <meta
-          name='description'
-          content={event.description}
-        />
+        <meta name="description" content={event.description} />
       </Head>
       <EventSummary title={event.title} />
       <EventLogistics
@@ -38,7 +36,7 @@ function EventDetailPage(props) {
       <EventContent>
         <p>{event.description}</p>
       </EventContent>
-      <Comments eventId={event.id} />
+      <Comments eventId={event.id} comments={props.eventComments} />
     </Fragment>
   );
 }
@@ -48,11 +46,22 @@ export async function getStaticProps(context) {
 
   const event = await getEventById(eventId);
 
+  const eventComments = clientSideEventComments(eventId);
+
+  if (!eventComments) {
+    return {
+      props: {
+        fetchingCommentsHasErrors: true,
+      },
+    };
+  }
+
   return {
     props: {
-      selectedEvent: event
+      selectedEvent: event,
+      eventComments,
     },
-    revalidate: 30
+    revalidate: 30,
   };
 }
 
@@ -63,7 +72,7 @@ export async function getStaticPaths() {
 
   return {
     paths: paths,
-    fallback: 'blocking'
+    fallback: 'blocking',
   };
 }
 
