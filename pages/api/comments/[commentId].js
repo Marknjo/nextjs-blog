@@ -1,11 +1,15 @@
-import { fetchAllEventComments } from '../../../helpers/server-utils';
+import {
+  fetchAllEventComments,
+  filteredComments,
+} from '../../../helpers/server-utils';
 
 function handler(req, resp) {
   //we are pre-rendering the reposnse
   const eventId = req.query.commentId;
   //sanitize the data before fetching
 
-  const eventComments = fetchAllEventComments(eventId);
+  const allComments = fetchAllEventComments(eventId);
+  const eventComments = filteredComments(allComments);
 
   resp.status(200).json({
     ok: true,

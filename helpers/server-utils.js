@@ -62,11 +62,22 @@ export function fetchAllEventComments(eventId) {
   const filePath = getFilePath('comments');
   const data = extractDataFromJsonFile(filePath);
 
-  return data
-    .filter(comment => comment.eventId === eventId)
-    .map(comment => ({
-      id: comment.id,
-      name: comment.name,
-      text: comment.text,
-    }));
+  return data.filter(comment => comment.eventId === eventId);
+}
+
+/**
+ *
+ * Filters the comments to avoid sending uncessary data to the client
+ *
+ * @param {Object} allComments Unfiltered comments
+ * @returns {Object} Array of mapped comments
+ *
+ * @author Mark Njoroge
+ */
+export function filteredComments(allComments) {
+  return allComments.map(comment => ({
+    id: comment.id,
+    name: comment.name,
+    text: comment.text,
+  }));
 }
