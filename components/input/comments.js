@@ -10,11 +10,34 @@ function Comments(props) {
   const [showComments, setShowComments] = useState(false);
 
   function toggleCommentsHandler() {
-    setShowComments((prevStatus) => !prevStatus);
+    setShowComments(prevStatus => !prevStatus);
   }
 
-  function addCommentHandler(commentData) {
+  async function addCommentHandler(commentData) {
     // send data to API
+    //sanitized comments
+    //transform data
+    const transformData = {
+      ...commentData,
+      eventId,
+    };
+
+    // send the data
+    const response = await fetch('/api/comment/', {
+      method: 'POST',
+      body: JSON.stringify(transformData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Could not save your comment! Please try again');
+    }
+
+    const data = await response.json();
+
+    console.log(data.response);
   }
 
   return (

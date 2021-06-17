@@ -6,7 +6,7 @@ function handler(req, res) {
 
     //do serverside validations before submitting the email
 
-    res.status(200).json({ ok: true, data: { email } });
+    res.status(200).json({ ok: true, response: { email } });
   }
 }
 
