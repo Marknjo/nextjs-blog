@@ -38,3 +38,13 @@
   max-width: 40rem;
   margin: auto;
 }
+
+.hero small {
+  color: var(--color-grey-400);
+  display: inline-block;
+  padding: 0.5rem;
+  background-color: var(--color-grey-900);
+  margin: 0.5rem 0;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
