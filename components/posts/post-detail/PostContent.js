@@ -46,7 +46,6 @@ function PostContent(props) {
     },
 
     code: code => {
-      console.log(code);
       const { className, children } = code;
 
       return (
