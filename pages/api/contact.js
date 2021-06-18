@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+import { saveToJsonFile } from '../../lib/api-utils';
+
 export default (req, res) => {
   if (req.method === 'POST') {
     const { email, name, message } = req.body;
@@ -18,16 +20,20 @@ export default (req, res) => {
     }
     //Store it in a database
     const newMessage = {
+      id: Math.random().toString().slice(2, 15),
       email,
       name,
       message,
     };
 
-    res
-      .status(201)
-      .json({
+    try {
+      saveToJsonFile(newMessage, 'contact-messages');
+      res.status(201).json({
         message: "We've successfully received your message!",
-        message: newMessage,
+        response: newMessage,
       });
+    } catch (error) {
+      res.status(500).json({ message: 'Could not save to the database' });
+    }
   }
 };
