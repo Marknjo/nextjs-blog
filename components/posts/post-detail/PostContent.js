@@ -1,5 +1,5 @@
-import ReactMarkdown from 'react-markdown';
 import PostHeader from './PostHeader';
+import ReactMarkdown from 'react-markdown';
 import styles from './PostContent.module.css';
 const DUMMY_POST = {
   slug: 'getting-started-with-nextjs',
