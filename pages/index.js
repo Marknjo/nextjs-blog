@@ -1,34 +1,9 @@
-import Hero from '../components/home-page/Hero';
-import FeaturedPosts from '../components/home-page/FeaturedPosts';
-import { getFeaturedPosts } from '../lib/posts-utils';
-import Head from 'next/head';
+import styles from '../styles/Home.module.css';
 
-//1) Hero => Present ourselves
-//2) Featured posts
-
-export default function HomePage(props) {
+export default function Home() {
   return (
-    <>
-      <Head>
-        <title>Mark's Blog</title>
-        <meta
-          name="description"
-          content="Mark Njoroge is a fullstack JavaScript developer specializing on Tech stack like NodeJs, Den, React, React Native, and NextJs"
-        />
-      </Head>
-      <Hero />
-      <FeaturedPosts posts={props.posts} />
-    </>
+    <div className={styles.container}>
+      <h1>Hello Next app</h1>
+    </div>
   );
-}
-
-//3. pre-render posts
-export function getStaticProps() {
-  const featuredPosts = getFeaturedPosts();
-
-  return {
-    props: {
-      posts: featuredPosts,
-    },
-  };
 }
