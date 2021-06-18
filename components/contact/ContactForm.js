@@ -1,17 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ContactForm.module.css';
+import Notification from '../ui/Notification';
 
 export default function ContactForm() {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredName, setEnteredName] = useState('');
   const [enteredMessage, setEnteredMessage] = useState('');
+  const [requestStatus, setRequestStatus] = useState(); //pending, success, error default undefined
+  const [requestSuccessMessage, setRequestSuccessMessage] = useState('');
+  const [requestErrorMessage, setRequestErrorMessage] = useState('');
 
-  console.log('Re-render');
+  useEffect(() => {
+    if (requestStatus === 'success' || requestStatus === 'error') {
+      const timer = setTimeout(() => {
+        setRequestStatus(null);
+        setRequestErrorMessage(null);
+        setRequestSuccessMessage(null);
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [requestStatus]);
 
   async function sendMessageHandler(event) {
     try {
       event.preventDefault();
 
+      setRequestStatus('pending');
       //handle validations here
 
       //send to database
@@ -33,7 +50,9 @@ export default function ContactForm() {
 
       const data = await response.json();
 
-      console.log(data);
+      //Successful message
+      setRequestStatus('success');
+      setRequestSuccessMessage(data.message);
 
       //clear inputs
       setEnteredEmail('');
@@ -41,7 +60,8 @@ export default function ContactForm() {
       setEnteredMessage('');
     } catch (error) {
       //handle errors here
-      console.error(`💥💥💥💥 ${error}`);
+      setRequestStatus('error');
+      setRequestErrorMessage(error.message);
     }
   }
 
@@ -55,6 +75,32 @@ export default function ContactForm() {
 
   function messageChangeHandler(event) {
     setEnteredMessage(event.target.value);
+  }
+
+  let notification;
+
+  if (requestStatus === 'pending') {
+    notification = {
+      status: 'pending',
+      title: 'Sending your message...',
+      message: "Your message is on it's way",
+    };
+  }
+
+  if (requestStatus === 'success') {
+    notification = {
+      status: 'success',
+      title: 'Success!',
+      message: requestSuccessMessage,
+    };
+  }
+
+  if (requestStatus === 'error') {
+    notification = {
+      status: 'error',
+      title: 'Error!',
+      message: requestErrorMessage,
+    };
   }
 
   return (
@@ -103,6 +149,14 @@ export default function ContactForm() {
           <button type="submit">Message</button>
         </div>
       </form>
+
+      {notification && (
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />
+      )}
     </section>
   );
 }
