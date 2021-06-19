@@ -5,6 +5,20 @@ async function handler(req, res) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
 
+    //validation
+    if (
+      !email ||
+      !email.includes('@') ||
+      !password ||
+      password.trim().length < 7
+    ) {
+      res.status(422).json({
+        message:
+          'Invalid inputs - your password or email is invalid! Try again.',
+      });
+      return;
+    }
+
     //connect to db
     let client;
 
@@ -17,23 +31,25 @@ async function handler(req, res) {
       return;
     }
 
-    //validation
-    if (
-      !email ||
-      !email.includes('@') ||
-      !password ||
-      password.trim().length < 7
-    ) {
+    const db = client.db();
+    //check for existing users registration
+
+    try {
+      const isExistingUser = await db.collection('users').findOne({ email });
+
+      if (isExistingUser) {
+        throw new Error('User already registered!');
+      }
+    } catch (error) {
+      res.status(422).json({
+        message: error.message,
+      });
+
       client.close();
 
-      res.status(422).json({
-        message:
-          'Invalid inputs - your password or email is invalid! Try again.',
-      });
       return;
     }
 
-    const db = client.db();
     //save to db
     try {
       const hashedPassword = await hashPassword(password);
