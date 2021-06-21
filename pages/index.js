@@ -1,7 +1,9 @@
-import StartingPageContent from '../components/starting-page/starting-page';
+import styles from '../styles/Home.module.css';
 
-function HomePage() {
-  return <StartingPageContent />;
+export default function Home() {
+  return (
+    <div className={styles.container}>
+      <h1>Hello Next app</h1>
+    </div>
+  );
 }
-
-export default HomePage;
