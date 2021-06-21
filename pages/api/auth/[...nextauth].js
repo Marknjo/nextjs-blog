@@ -23,12 +23,17 @@ export default NextAuth({
           email: credentials.email,
         });
 
+        if (!user) {
+          client.close();
+          throw new Error('User or password is wrong!');
+        }
+
         const isValidPassword = await verifyPassword(
           credentials.password,
           user.password
         );
 
-        if (!user || !isValidPassword) {
+        if (!isValidPassword) {
           client.close();
           throw new Error('User or password is wrong!');
         }
