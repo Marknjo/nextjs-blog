@@ -16,7 +16,7 @@ async function handler(req, res) {
 
   const userEmail = session.user.email;
 
-  const oldPass = req.body.oldPassword;
+  const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
 
   let client;
