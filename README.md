@@ -1,24 +1,14 @@
-# :rocket: NextJS Lab
 
-## :balloon: Overview
+# :rocket: Build a Simple Blog
 
-This is a simple setup for exercising NextJs. This is not project specific. Just want to keep track of the code I learn.
+![project-screenshot](https://github.com/Marknjo/nextjs-blog/assets/19428492/04812a50-742d-4999-be96-841114ab5f34)
 
-This project was bootstrapped with [Create Next App](https://nextjs.org/docs/getting-started).
+This project is dedication to my manager for helping me through NextJs. I hope this project inspires the client to find NextJs an attractive and modern technology to build projects with.
 
-## Available Scripts
+## :balloon: Skills Gained in the Session
 
-In the project directory, you can run:
+- It's cooler to build projects with NextJs and React. I like the idea of consuming MDX as the blog templates. It looks like it's the future of building future documentation and blogs.
 
-### `npm start`
+## :bookmark_tabs: Footnotes
 
-Start Next JS in a Production Server.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-### `npm run dev`
-
-Starts NextJs in Development mode
+I am gaining more confidence in writing React + Next applications. I can already see a lot of use cases. I can say tech today is less difficult than it used to be.
